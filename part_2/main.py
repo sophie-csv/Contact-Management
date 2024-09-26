@@ -22,7 +22,7 @@ def remove_item_from_todo_list(item):
         print({item} 'not in todo list.')
         return
     to_do_list.remove(item)
-    f = open('')
+    f =
 
 while True:
     print_to_do_list()
