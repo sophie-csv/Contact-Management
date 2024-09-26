@@ -10,7 +10,7 @@ f = open('test.txt', 'r')
 text = f.read()
 f.close()
 
-text += ' and he is'
+text += ' and he is the best'
 
 f = open('test.txt', 'w')
 f.write(text)
