@@ -54,7 +54,10 @@ def setup_db():
     CNTRL + ALT + L
     """
 
-
+def write_to_contacts(contacts_dict):
+    f = open("contact_data.json", "w")
+    json.dump(contacts_dict, f)
+    f.close()
 
 def get_contacts_dict():
     """
@@ -62,12 +65,17 @@ def get_contacts_dict():
      This will be used in other functions to get the current state of the db.
     :return: current contacts.json as a python dict.
     """
+    f = open("contact_data.json", "r")
+    contacts = json.load(f)
+    f.close()
+    return contacts
 
 def get_contact_info():
     """
 
     :return:
     """
+
     first_name = input("Enter the first name: ")
     last_name = input("Enter the last name: ")
     phone_number = input("Enter the phone number: ")
@@ -75,8 +83,43 @@ def get_contact_info():
     city = input("Enter the city: ")
     state = input("Enter the state: ")
     zipcode = input("Enter the zipcode: ")
-    groups = input("Enter the groups: ")
+    groups = []
+    num_groups = input("Enter the number of: ")
+    for i in range(int(num_groups)):
+        group = input("Enter the group: ")
+        groups.append(group)
+
+    contact = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "phone_number": phone_number,
+        "address": {
+        "street": street,
+        "city": city,
+        "state": state,
+        "zipcode": zipcode
+        },
+        "groups": groups
+    }
+    return contact
+
+def add_contact(contact):
+     contacts = get_contacts_dict()
+     contacts["current_id"] += 1
+     id = contacts["current_id"]
+     new_id = contacts["first_name"].lower() + str(id)
+     write_to_contacts(contacts)
+
+def get_contacts_by_id(id):
+    contacts = get_contacts_dict()
+    for contact in contacts:
+        if contact["data"]["id"] == id:
+            return contact
+    else:
+        return False
+
+def remove_contact(id):
 
 
 
-get_contact_info()
+
