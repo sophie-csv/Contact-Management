@@ -72,8 +72,7 @@ def get_contacts_dict():
 
 def get_contact_info():
     """
-
-    :return:
+    gets all the info from user input
     """
 
     first_name = input("Enter the first name: ")
@@ -103,11 +102,12 @@ def get_contact_info():
     }
     return contact
 
-def add_contact(contact):
+def add_contact(contact_info):
      contacts = get_contacts_dict()
      contacts["current_id"] += 1
-     id = contacts["current_id"]
-     new_id = contacts["first_name"].lower() + str(id)
+     contact_info["id"] = contacts["current_id"]
+     key = contacts["first_name"].lower() + str(id)
+     contacts[key] = contact_info
      write_to_contacts(contacts)
 
 def get_contacts_by_id(id):
@@ -119,7 +119,35 @@ def get_contacts_by_id(id):
         return False
 
 def remove_contact(id):
+    data = get_contacts_dict()
+    contact = get_contacts_by_id(id)
+    del data[contact]
+    write_to_contacts(data)
 
+
+
+def update_contact(id, contact_info):
+    data = get_contacts_dict()
+    contact = get_contacts_by_id(id)
+    data.update(contact, contact_info)
+    json.dump(data)
+
+
+def print_formatted_contact(contact):
+    contact = get_contacts_dict()
+    c = contact["data"]
+    print(c["last_name"] + "," + c["first_name"])
+    print(c["phone_number"])
+    print(c["address"]["street"])
+    print(c["city"] + "," + c["state"] + c["zipcode"])
+    print(c["groups"])
+    print(c["id"])
+
+temp = get_contacts_dict()
+print(temp)
+temp["current_id"] = 100
+print(temp)
+write_to_contacts(temp)
 
 
 
