@@ -1,1 +1,37 @@
-{"current_id": 100, "data": {"john0": {"id": 0, "first_name": "John", "last_name": "Doe", "phone_number": "000-000-0000", "address": {"street": "123 Main Street", "city": "Atlanta", "state": "Ga", "zipcode": 12345}, "groups": ["CS Pathway", "TSA"]}, "jane1": {"id": 1, "first_name": "Jane", "last_name": "Doe", "phone_number": "312-645-0987", "address": {"street": "123 Lala Lane", "city": "Orlando", "state": "Fl", "zipcode": 54321}, "groups": ["Eng Pathway", "TSA"]}}}
+{
+  "current_id": 1,
+  "data": {
+    "john0": {
+      "id": 0,
+      "first_name": "John",
+      "last_name": "Doe",
+      "phone_number": "000-000-0000",
+      "address": {
+        "street": "123 Main Street",
+        "city": "Atlanta",
+        "state": "Ga",
+        "zipcode": 12345
+      },
+      "groups": [
+        "CS Pathway",
+        "TSA"
+      ]
+    },
+    "jane1": {
+      "id": 1,
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "phone_number": "312-645-0987",
+      "address": {
+        "street": "123 Lala Lane",
+        "city": "Orlando",
+        "state": "Fl",
+        "zipcode": 54321
+      },
+      "groups": [
+        "Eng Pathway",
+        "TSA"
+      ]
+    }
+  }
+}

@@ -143,11 +143,24 @@ def print_formatted_contact(contact):
     print(c["groups"])
     print(c["id"])
 
-temp = get_contacts_dict()
-print(temp)
-temp["current_id"] = 100
-print(temp)
-write_to_contacts(temp)
+def print_contacts_from_id_list(id_list):
+    contacts = get_contacts_dict()
+    for contact in contacts["data"]:
+        for id in id_list:
+            if id in id_list:
+                print_formatted_contact(get_contacts_by_id(contacts["data"][contact]["id"]))
+            else:
+                print("No Contact Found")
 
 
+def print_contacts_from_name_list(name_list):
+    contacts = get_contacts_dict()
+    for contact in contacts["data"]:
+        for first_name in name_list:
+            if first_name in name_list:
+                print_formatted_contact(contacts["data"][contact]["first_name"])
+            else:
+                print("No Contact Found")
 
+
+def print_contacts_(phone_list):
