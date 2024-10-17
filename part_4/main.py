@@ -112,11 +112,10 @@ def add_contact(contact_info):
 
 def get_contacts_by_id(id):
     contacts = get_contacts_dict()
-    for contact in contacts:
-        if contact["data"]["id"] == id:
+    for contact in contacts["data"]:
+        if contacts["data"][contact]["id"] == id:
             return contact
-    else:
-        return False
+    return False
 
 def remove_contact(id):
     data = get_contacts_dict()
@@ -134,33 +133,65 @@ def update_contact(id, contact_info):
 
 
 def print_formatted_contact(contact):
-    contact = get_contacts_dict()
-    c = contact["data"]
+    contacts = get_contacts_dict()
+    c = contacts["data"][contact]
     print(c["last_name"] + "," + c["first_name"])
     print(c["phone_number"])
     print(c["address"]["street"])
-    print(c["city"] + "," + c["state"] + c["zipcode"])
+    print(c["address"]["city"] + "," + c["address"]["state"] + " " + str(c["address"]["zipcode"]))
     print(c["groups"])
     print(c["id"])
 
 def print_contacts_from_id_list(id_list):
+    count = 0
     contacts = get_contacts_dict()
     for contact in contacts["data"]:
+        print(contacts["data"][contact]["id"])
+        get_contacts_by_id(contacts["data"][contact]["id"])
         for id in id_list:
-            if id in id_list:
+            if id == contacts["data"][contact]["id"]:
                 print_formatted_contact(get_contacts_by_id(contacts["data"][contact]["id"]))
-            else:
-                print("No Contact Found")
+                count += 1
+    if count == 0:
+        print("No Contact Found")
 
 
-def print_contacts_from_name_list(name_list):
+def get_contacts_by_first_name(first_name):
+    count = 0
     contacts = get_contacts_dict()
     for contact in contacts["data"]:
-        for first_name in name_list:
-            if first_name in name_list:
-                print_formatted_contact(contacts["data"][contact]["first_name"])
-            else:
-                print("No Contact Found")
+        if contact["first_name"] == first_name:
+            print_formatted_contact(contacts["data"][contact]["first_name"])
+            count += 1
+    if count == 0:
+        print("No Contact Found")
+
+def get_contacts_by_last_name(last_name):
+    count = 0
+    contacts = get_contacts_dict()
+    for contact in contacts["data"]:
+        if contact["last_name"] == last_name:
+            print_formatted_contact(contacts["data"][contact]["last_name"])
+            count += 1
+    if count == 0:
+        print("No Contact Found")
 
 
-def print_contacts_(phone_list):
+def get_contacts_by_group(group):
+    contacts = get_contacts_dict()
+    id_list = []
+    for contact in contacts["data"]:
+        if contact["groups"] == group:
+            id_list.append(contact["id"])
+    print_contacts_from_id_list(id_list)
+
+def get_contacts_by_city(city):
+    contacts = get_contacts_dict()
+    city_list = []
+    for contact in contacts["data"]:
+        if contact["city"] == city:
+            city_list.append(contact["id"])
+    print_contacts_from_id_list(city_list)
+
+
+print_contacts_from_id_list([0, 1])
