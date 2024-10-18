@@ -146,7 +146,6 @@ def print_contacts_from_id_list(id_list):
     count = 0
     contacts = get_contacts_dict()
     for contact in contacts["data"]:
-        print(contacts["data"][contact]["id"])
         get_contacts_by_id(contacts["data"][contact]["id"])
         for id in id_list:
             if id == contacts["data"][contact]["id"]:
@@ -157,41 +156,95 @@ def print_contacts_from_id_list(id_list):
 
 
 def get_contacts_by_first_name(first_name):
-    count = 0
     contacts = get_contacts_dict()
+    id_list = []
     for contact in contacts["data"]:
-        if contact["first_name"] == first_name:
-            print_formatted_contact(contacts["data"][contact]["first_name"])
-            count += 1
-    if count == 0:
-        print("No Contact Found")
+        if contacts["data"][contact]["first_name"] == first_name:
+            id_list.append(get_contacts_by_id(contacts["data"][contact]["first_name"]))
+    print_contacts_from_id_list(id_list)
 
 def get_contacts_by_last_name(last_name):
-    count = 0
     contacts = get_contacts_dict()
+    id_list = []
     for contact in contacts["data"]:
-        if contact["last_name"] == last_name:
-            print_formatted_contact(contacts["data"][contact]["last_name"])
-            count += 1
-    if count == 0:
-        print("No Contact Found")
+        if contacts["data"][contact]["last_name"] == last_name:
+            id_list.append(get_contacts_by_id(contacts["data"][contact]["last_name"]))
+    print_contacts_from_id_list(id_list)
 
 
 def get_contacts_by_group(group):
     contacts = get_contacts_dict()
     id_list = []
     for contact in contacts["data"]:
-        if contact["groups"] == group:
-            id_list.append(contact["id"])
+        for thegroup in contacts["data"][contact]["groups"]:
+            if thegroup == group:
+                id_list.append(get_contacts_by_id(contacts["data"][contact]["groups"]))
     print_contacts_from_id_list(id_list)
 
 def get_contacts_by_city(city):
     contacts = get_contacts_dict()
-    city_list = []
+    id_list = []
     for contact in contacts["data"]:
-        if contact["city"] == city:
-            city_list.append(contact["id"])
-    print_contacts_from_id_list(city_list)
+        if contacts["data"][contact]["address"]["city"] == city:
+            id_list.append(get_contacts_by_id(contacts["data"][contact]["address"]["city"]))
+    print_contacts_from_id_list(id_list)
+
+def get_contacts_by_state(state):
+    contacts = get_contacts_dict()
+    id_list = []
+    for contact in contacts["data"]:
+        if contacts["data"][contact]["address"]["state"] == state:
+            id_list.append(get_contacts_by_id(contacts["data"][contact]["address"]["state"]))
+    print_contacts_from_id_list(id_list)
+
+def search_contact():
+    contacts = get_contacts_dict()
+    search = input("Enter: 1-first name, 2-last name, 3-group, 4-city, 5-state:   " )
+    term = input("Enter search term: ")
+    if search == "1":
+        get_contacts_by_first_name(term)
+    if search == "2":
+        get_contacts_by_last_name(term)
+    if search == "3":
+        get_contacts_by_group(term)
+    if search == "4":
+        get_contacts_by_city(term)
+    if search == "5":
+        get_contacts_by_state(term)
+
+def print_all_contacts():
+    contacts = get_contacts_dict()
+    for contact in contacts["data"]:
+        print_formatted_contact(contact)
 
 
-print_contacts_from_id_list([0, 1])
+setup_db()
+while True:
+    term =  input("Enter: \n 1- Add Contact \n 2- Remove Contact \n 3- Update Contact \n 4- Print one contact \n 5- Print contacts from ID list \n 6- search contacts based on one term \n 7- Print all contacts \n 8- to end \n ENTER HERE: ")
+    if term == "8":
+        break
+    if term == "1":
+        add_contact(get_contact_info())
+    if term == "2":
+        remove_contact(get_contact_info())
+    if term == "3":
+        id = input("Enter the contact id: ")
+        update_contact(id, get_contact_info())
+    if term == "4":
+        key = input("Enter the contact key: ")
+        print_formatted_contact(key)
+    if term == "5":
+        id_list = []
+        many = input("Enter the number of ids: ")
+        for i in range(int(many)):
+            id = input("Enter the contact id: ")
+            id_list.append(id)
+        print_contacts_from_id_list(id_list)
+    if term == "6":
+        search_contact()
+    if term == "7":
+        print_all_contacts()
+
+
+
+
